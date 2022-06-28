@@ -64,10 +64,10 @@ class BinaryTreeNode {
   }
 }
 
-const B = new BinaryTreeNode("B");
-const A = new BinaryTreeNode("A");
-const C = new BinaryTreeNode("C");
-const D = new BinaryTreeNode("D");
+const B = new BinaryTreeNode('B');
+const A = new BinaryTreeNode('A');
+const C = new BinaryTreeNode('C');
+const D = new BinaryTreeNode('D');
 
 // B will be the root of the tree:
 // B.add(A);
@@ -105,17 +105,49 @@ class PersonTreeNode {
   findPerson(name) {
     if (name === this.value) {
       return this.person;
-    } else if (name === this.right.value) {
+    } else if (this.right && name === this.right.value) {
       return this.right.person;
-    } else if (name === this.left.value) {
+    } else if (this.left && name === this.left.value) {
       return this.left.person;
     } else if (name > this.value) {
-        this.right.findPerson(name);
-      } else {
-        this.left.findPerson(name);
-      }
+      this.right.findPerson(name);
+    } else {
+      this.left.findPerson(name);
+    }
   }
+}
 
+const Jones = new PersonTreeNode({
+  name: 'Jones',
+  phone: '123-456-789',
+  address: 'something',
+});
+const Brook = new PersonTreeNode({
+  name: 'Brook',
+  phone: '123-456-789',
+  address: 'something',
+});
+const Smith = new PersonTreeNode({
+  name: 'Smith',
+  phone: '123-456-789',
+  address: 'something',
+});
+const Nelson = new PersonTreeNode({
+  name: 'Nelson',
+  phone: '123-456-789',
+  address: 'something',
+});
+
+Jones.add(Brook);
+// console.log(Jones);
+Jones.add(Smith);
+// console.log(Jones);
+Jones.add(Nelson);
+console.log(Jones);
+
+console.log(Jones.findPerson('Brook'));
+console.log(Jones.findPerson('Smith'));
+console.log(Jones.findPerson('Nelson'));
 
 // "root" is the node at the root of the tree (the tree)
 // let person = root.find("Nelson");
