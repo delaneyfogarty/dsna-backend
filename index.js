@@ -10,10 +10,15 @@ class LinkedList {
     this.head = new Node(val);
   }
 
-  add(){
-
+  add(value) {
+    let current = this.head;
+    while (current.next) {
+      current = current.next;
+    }
+    current.next = new Node(value);
+    // return current;
   }
-  removeTail(){}
+  removeTail() {}
 
   getList() {
     const listArr = [];
@@ -27,11 +32,133 @@ class LinkedList {
   }
 }
 
-const list = new LinkedList("A");
-console.log(list.head);
-list.add("B");
-console.log(list.getList());
-list.add("C");
-console.log(list.getList());
+// const list = new LinkedList('A');
+// console.log(list.head);
+// list.add('B');
+// console.log(list.getList());
+// list.add('C');
+// console.log(list.getList());
 
-module.exports = { LinkedList };
+class BinaryTreeNode {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+
+  add(node) {
+    if (node.value > this.value) {
+      if (!this.right) {
+        this.right = node;
+      } else {
+        this.right.add(node);
+      }
+    }
+    if (node.value < this.value) {
+      if (!this.left) {
+        this.left = node;
+      } else {
+        this.left.add(node);
+      }
+    }
+  }
+}
+
+const B = new BinaryTreeNode('B');
+const A = new BinaryTreeNode('A');
+const C = new BinaryTreeNode('C');
+const D = new BinaryTreeNode('D');
+
+// B will be the root of the tree:
+// B.add(A);
+// console.log(B);
+// B.add(D);
+// console.log(B);
+// B.add(C);
+// console.log(B);
+
+class PersonTreeNode {
+  constructor(person) {
+    this.value = person.name;
+    this.person = person;
+    this.left = null;
+    this.right = null;
+  }
+
+  add(node) {
+    if (node.value > this.value) {
+      if (!this.right) {
+        this.right = node;
+      } else {
+        this.right.add(node);
+      }
+    }
+    if (node.value < this.value) {
+      if (!this.left) {
+        this.left = node;
+      } else {
+        this.left.add(node);
+      }
+    }
+  }
+
+  findPerson(name) {
+    if (name === this.value) {
+      return this.person;
+    } else if (this.right && name === this.right.value) {
+      return this.right.person;
+    } else if (this.left && name === this.left.value) {
+      return this.left.person;
+    } else if (name > this.value) {
+      this.right.findPerson(name);
+    } else {
+      this.left.findPerson(name);
+    }
+  }
+}
+
+const Jones = new PersonTreeNode({
+  name: 'Jones',
+  phone: '123-456-789',
+  address: 'something',
+});
+const Brook = new PersonTreeNode({
+  name: 'Brook',
+  phone: '123-456-789',
+  address: 'something',
+});
+const Smith = new PersonTreeNode({
+  name: 'Smith',
+  phone: '123-456-789',
+  address: 'something',
+});
+const Nelson = new PersonTreeNode({
+  name: 'Nelson',
+  phone: '123-456-789',
+  address: 'something',
+});
+
+Jones.add(Brook);
+// console.log(Jones);
+Jones.add(Smith);
+// console.log(Jones);
+Jones.add(Nelson);
+console.log(Jones);
+
+console.log(Jones.findPerson('Brook'));
+console.log(Jones.findPerson('Smith'));
+console.log(Jones.findPerson('Nelson'));
+
+// "root" is the node at the root of the tree (the tree)
+// let person = root.find("Nelson");
+// // person looks like
+// // {
+// //   name: 'Nelson',
+// //   phone: '555-1212',
+// //   address: '123 Main St'
+// // }
+
+// let person2 = root.find("Foo");
+// person2 is null
+
+module.exports = { LinkedList, BinaryTreeNode, PersonTreeNode };
